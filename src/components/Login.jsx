@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { login as storeLogin } from "../store/authSlice";
+import { login } from "../store/authSlice";
 import { Button, Input, Logo } from "./index";
 import { useDispatch } from "react-redux";
 import authServices from "../appwrite/auth";
 import { useForm } from "react-hook-form";
+
+import { useSelector } from "react-redux";
 
 function Login() {
   const navigate = useNavigate();
@@ -12,16 +14,22 @@ function Login() {
   const { register, handleSubmit } = useForm();
   const [error, setError] = useState("");
 
-  const login = async (data) => {
+  const storeUserData = useSelector((state) => state.auth.userData);
+    useEffect(() => {
+      console.log("Updated storeUserData (useEffect):", storeUserData);
+    }, [storeUserData]);
+
+  const handleLogin = async (data) => {
     setError("");
     try {
       const session = await authServices.login(data);
       if (session) {
         const userData = await authServices.getCurrentUser();
         if (userData) {
-          dispatch(storeLogin(userData));
+          console.log("userData value is:::", userData);
+
+          dispatch(login(userData));
           navigate("/");
-          console.log("userData value while user logged in:::", userData)
         }
       }
     } catch (error) {
@@ -51,7 +59,7 @@ function Login() {
           </Link>
         </p>
         {error && <p className="text-red-600 text-center mt-8">{error}</p>}
-        <form onSubmit={handleSubmit(login)} className="mt-8">
+        <form onSubmit={handleSubmit(handleLogin)} className="mt-8">
           <div className="space-y-5">
             <Input
               label="Email: "
@@ -65,19 +73,18 @@ function Login() {
                     "Email address must be a valid address",
                 },
               })}
-                      />
-                      <Input
-                          label="Password: "
-                          type="password"
-                          placeholder="Enter your password"
-                          {...register("password", {
-                              required: true
-                          })}
-                      />
-                      <Button
-                          type="submit"
-                          className="w-full"
-                      >Sign in</Button>
+            />
+            <Input
+              label="Password: "
+              type="password"
+              placeholder="Enter your password"
+              {...register("password", {
+                required: true,
+              })}
+            />
+            <Button type="submit" className="w-full">
+              Sign in
+            </Button>
           </div>
         </form>
       </div>

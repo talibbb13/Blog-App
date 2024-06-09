@@ -16,7 +16,7 @@ function PostForm({ post }) {
   });
 
   const navigate = useNavigate();
-  const userData = useSelector((state) => state.userData);
+  const userData = useSelector((state) => state.auth.userData);
 
   const submit = async (data) => {
     console.log("userData value while submitting form:::", userData)
@@ -26,11 +26,11 @@ function PostForm({ post }) {
         : null;
 
       if (file) {
-        appwriteServices.deleteFile(post.featuredImage);
+        appwriteServices.deleteFile(post.featuredImages);
       }
       const dbPost = await appwriteServices.updatePost(post.$id, {
         ...data,
-        featuredImage: file ? file.$id : undefined,
+        featuredImages: file ? file.$id : undefined,
         if(dbPost) {
           navigate(`/post/${dbPost.$id}`);
         },
@@ -41,7 +41,7 @@ function PostForm({ post }) {
         : null;
       if (file) {
         const fileId = file.$id;
-        data.featuredImage = fileId;
+        data.featuredImages = fileId;
         const dbPost = await appwriteServices.createPost({
           ...data,
           userId: userData.$id,
@@ -114,7 +114,7 @@ function PostForm({ post }) {
         {post && (
           <div className="w-full mb-4">
             <img
-              src={appwriteServices.getFilePreview(post.featuredImage)}
+              src={appwriteServices.getFilePreview(post.featuredImages)}
               alt={post.title}
               className="rounded-lg"
             />
