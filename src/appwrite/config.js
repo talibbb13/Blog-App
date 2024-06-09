@@ -1,13 +1,13 @@
 import conf from "../conf/conf";
 import { Client, ID, Databases, Storage, Query } from "appwrite";
 
-export class Service {
+export class Services {
   client = new Client();
   databases;
   bucket;
 
   constructor() {
-    this.client.setEndpoint(appwriteUrl).setProject(appwriteProjectId);
+    this.client.setEndpoint(conf.appwriteUrl).setProject(conf.appwriteProjectId);
     this.databases = new Databases(this.client);
     this.bucket = new Storage(this.client);
   }
@@ -114,11 +114,10 @@ export class Service {
     }
   }
 
-  // async opt
   getFilePreview(fileId) {
     return this.bucket.getFilePreview(conf.appwriteBucketId, fileId);
   }
 }
 
-const service = new Service();
-export default service;
+const services = new Services();
+export default services;

@@ -21,7 +21,7 @@ class authService {
         name
       );
       if (userAccount) {
-        this.login({ email, password });
+        return this.login({ email, password });
       } else {
         return userAccount;
       }
@@ -38,24 +38,33 @@ class authService {
       console.log("appwrite login error: ", error);
       throw error;
     }
-    }
+  }
 
   async getCurrentUser() {
     try {
       return await this.account.get();
     } catch (error) {
+      // if (error.code === 401) {
+      //   console.log("acc nhi bna h");
+      //   return null;
+      // }
       console.log("Appwrite getCurrentUser func error: ", error);
     }
+    return null 
   }
 
-  // assignment-1
   async deleteAccount() {
-    // await this.account.deleteSession("current")
+    try {
+      await this.account.deleteSession("current");
+    } catch (error) {
+      console.log("Appwrite deleteAccount func error: ", error);
+      
+    }
   }
 
   async logout() {
     try {
-      this.account.deleteSession();
+      this.account.deleteSession("current");
     } catch (error) {
       console.log("appwrite logout error::: ", error);
       throw error;
