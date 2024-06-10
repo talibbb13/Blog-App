@@ -14,7 +14,7 @@ function App() {
       .getCurrentUser()
       .then((userData) => {
         if (userData) {
-          dispatch(login({ userData }));
+          dispatch(login( userData ));
         } else {
           dispatch(logout());
         }
@@ -22,15 +22,18 @@ function App() {
       .finally(() => setLoading(false));
   }, []);
 
-  return loading ? null : (
-    <div className="min-h-screen flex flex-wrap content-between bg-gray-400">
-      <div className="w-full block">
-        <Header />
+return loading ? null : (
+  <div className="min-h-screen flex flex-col bg-[#1e1e1e] text-[#c1e8ff]">
+    <div className="w-full flex flex-col">
+      <Header />
+      <div className="flex-grow">
         <Outlet />
-        <Footer />
+        <hr/>
       </div>
+      <Footer />
     </div>
-  );
+  </div>
+);
 }
 
 export default App;

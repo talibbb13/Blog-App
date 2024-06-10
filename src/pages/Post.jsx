@@ -32,7 +32,7 @@ export default function Post() {
     });
   };
 
-  return post ? (
+  return post && (
     <div className="py-8">
       <Container>
         <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
@@ -61,5 +61,5 @@ export default function Post() {
         <div className="browser-css">{parse(post.content)}</div>
       </Container>
     </div>
-  ) : null;
+  );
 }
