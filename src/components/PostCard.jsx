@@ -1,5 +1,3 @@
-// ddd
-import React from "react";
 import appwriteServices from "../appwrite/config";
 import { Link } from "react-router-dom";
 
