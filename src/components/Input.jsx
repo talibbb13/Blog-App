@@ -1,6 +1,6 @@
-import React, { useId } from "react";
+import { useId, forwardRef } from "react";
 
-const Input = React.forwardRef(function Input(
+const Input = forwardRef(function Input(
   { label, type = "text", className = "", ...props },
   ref
 ) {
@@ -14,7 +14,7 @@ const Input = React.forwardRef(function Input(
         </label>
       )}
       <input
-        className={`px-3 py-2 rounded-lg bg-white text-black outline-none focus:bg-gray-50 duration-200 border border-gray-200 w-full ${className}`}
+        className={`px-3 py-2 rounded-lg text-black outline-none duration-200 border border-gray-200 w-full ${className}`}
         type={type}
         {...props}
         id={String(id)}

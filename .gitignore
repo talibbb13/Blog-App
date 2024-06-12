@@ -23,14 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 
-# enviroment
+#enviroment
 *.env
 *.env.example
 *.env.local
 *.env.staging
-
-#enviroment
-*.env.example
-*.env.local
-*.env.staging
-.env

@@ -1,12 +1,7 @@
-import React, {useId} from 'react'
+import React, { useId } from "react";
 
-function Select({
-    options,
-    label,
-    className = "",
-    ...props
-}, ref) {   
-    const id = useId()
+function Select({ options, label, className = "", ...props }, ref) {
+  const id = useId();
 
   return (
     <div className="w-full">
@@ -16,12 +11,12 @@ function Select({
         id={id}
         {...props}
         ref={ref}
-          >
-              {options?.map((option) => (
-                  <option key={option} value={option}>
-                      {option}
-                </option>
-              ))}
+      >
+        {options?.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
       </select>
     </div>
   );

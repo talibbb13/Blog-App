@@ -44,13 +44,9 @@ class authService {
     try {
       return await this.account.get();
     } catch (error) {
-      // if (error.code === 401) {
-      //   console.log("acc nhi bna h");
-      //   return null;
-      // }
       console.log("Appwrite getCurrentUser func error: ", error);
     }
-    return null 
+    return null;
   }
 
   async deleteAccount() {
@@ -58,7 +54,6 @@ class authService {
       await this.account.deleteSession("current");
     } catch (error) {
       console.log("Appwrite deleteAccount func error: ", error);
-      
     }
   }
 
