@@ -1,7 +1,6 @@
 import { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Button, Input, RTE } from "../index";
-import Select from "../Select"
 import appwriteServices from "../../appwrite/config";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -22,9 +21,8 @@ function PostForm({ post }) {
 
   const submit = async (data) => {
     if (post) {
-      const file = data.image[0]
-        && await appwriteServices.uploadFile(data.image[0])
-        ;
+      const file =
+        data.image[0] && (await appwriteServices.uploadFile(data.image[0]));
 
       if (file) {
         await appwriteServices.deleteFile(post.featuredImages);
@@ -38,11 +36,10 @@ function PostForm({ post }) {
       if (dbPost) {
         navigate(`/post/${dbPost.$id}`);
       }
-      console.log("Updating-Post work", dbPost);
     } else {
-      const file = data.image[0]
-        && await appwriteServices.uploadFile(data.image[0])
-        ;
+      const file =
+        data.image[0] && (await appwriteServices.uploadFile(data.image[0]));
+
       if (file) {
         const fileId = file.$id;
         data.featuredImages = fileId;
@@ -64,10 +61,9 @@ function PostForm({ post }) {
         .toLowerCase()
         .replace(/[^a-zA-Z\d\s]+/g, "-")
         .replace(/\s/g, "-");
-    } else "";
+    } else return "";
   }, []);
 
-  // ddd
   useEffect(() => {
     const subscription = watch((value, { name }) => {
       if (name === "title") {
@@ -81,9 +77,12 @@ function PostForm({ post }) {
   }, [watch, slugTransform, setValue]);
 
   return (
-    <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
-      <div className="w-2/3 px-2">
-        <div className="mb-4">
+    <form
+      onSubmit={handleSubmit(submit)}
+      className="flex flex-col lg:flex-row bg-gray-900 text-white p-4 rounded-lg shadow-lg space-y-4 lg:space-y-0 lg:space-x-4"
+    >
+      <div className="flex flex-col w-full lg:w-1/2 space-y-4">
+        <div>
           <label
             htmlFor="title"
             className="block mb-2 text-sm font-medium text-gray-300"
@@ -97,7 +96,7 @@ function PostForm({ post }) {
             {...register("title", { required: true })}
           />
         </div>
-        <div className="mb-4">
+        <div>
           <label
             htmlFor="slug"
             className="block mb-2 text-sm font-medium text-gray-300"
@@ -116,16 +115,7 @@ function PostForm({ post }) {
             }}
           />
         </div>
-        <RTE
-          label="Content :"
-          name="content"
-          control={control}
-          defaultValue={getValues("content")}
-          className="mb-4 border border-gray-700 bg-gray-800 text-white rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-[#c1e8ff]"
-        />
-      </div>
-      <div className="w-1/3 px-2">
-        <div className="mb-4">
+        <div>
           <label
             htmlFor="image"
             className="block mb-2 text-sm font-medium text-gray-300"
@@ -141,15 +131,15 @@ function PostForm({ post }) {
           />
         </div>
         {post && (
-          <div className="w-full mb-4">
+          <div>
             <img
               src={appwriteServices.getFilePreview(post.featuredImages)}
               alt={post.title}
-              className="rounded-lg shadow-md"
+              className="rounded-lg shadow-md w-full"
             />
           </div>
         )}
-        <div className="mb-4">
+        <div>
           <label
             htmlFor="status"
             className="block mb-2 text-sm font-medium text-gray-300"
@@ -174,11 +164,23 @@ function PostForm({ post }) {
         </div>
         <Button
           type="submit"
-          bgColor={post && "bg-green-500"}
-          className="w-full py-2 bg-[#007acc] text-black font-medium rounded-lg shadow-md hover:bg-gray-800 hover:text-white transition-colors duration-300"
+          className={`w-full py-2 text-black font-medium rounded-lg shadow-md transition-colors duration-300 ${
+            post
+              ? "bg-green-500 hover:bg-green-400"
+              : "bg-blue-500 hover:bg-blue-400"
+          } `}
         >
           {post ? "Update" : "Submit"}
         </Button>
+      </div>
+      <div className="w-full lg:w-1/2">
+        <RTE
+          label="Content :"
+          name="content"
+          control={control}
+          defaultValue={getValues("content")}
+          className="mb-4 border border-gray-700 bg-gray-800 text-white rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-[#c1e8ff] h-full"
+        />
       </div>
     </form>
   );

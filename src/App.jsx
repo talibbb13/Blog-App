@@ -22,17 +22,19 @@ function App() {
       .finally(() => setLoading(false));
   }, []);
 
-  return !loading && (
-    <div className="min-h-screen flex flex-col bg-[#1e1e1e] text-[#c1e8ff]">
-      <div className="w-full flex flex-col">
-        <Header />
-        <div className="flex-grow">
-          <Outlet />
-          <hr />
+  return (
+    !loading && (
+      <div className="min-h-screen flex flex-col bg-gradient-to-r from-gray-800 to-gray-900 text-[#c1e8ff]">
+        <div className="w-full flex flex-col">
+          <Header />
+          <div className="flex-grow">
+            <Outlet />
+            <hr />
+          </div>
+          <Footer />
         </div>
-        <Footer />
       </div>
-    </div>
+    )
   );
 }
 
