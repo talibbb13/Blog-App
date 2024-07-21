@@ -30,7 +30,7 @@ A Production Grade Blog Web Application built with React, featuring a clean and 
     ```
 2. **Navigate to the project directory**
     ```bash
-    cd Blog-Application
+    cd Blog-App
     ```
 3. **Install dependencies**
     ```bash
