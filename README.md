@@ -26,7 +26,7 @@ A Production Grade Blog Web Application built with React, featuring a clean and 
 
 1. **Clone the repository**
     ```bash
-    git clone https://github.com/talibbb13/Blog-Application.git
+    git clone https://github.com/talibbb13/Blog-App.git
     ```
 2. **Navigate to the project directory**
     ```bash
